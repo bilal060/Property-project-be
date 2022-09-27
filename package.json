@@ -2,7 +2,7 @@
   "name": "cedimed-react",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon ./server.js --ignore public/",
+    "start": "node ./server.js --ignore public/",
     "production": "NODE_ENV=production",
     "setup": "node ./setup/setup.js",
     "reset": "node ./setup/reset.js",
