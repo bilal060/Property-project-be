@@ -1,5 +1,6 @@
 //this middleware will check if the admin  is logged in, if not he will be redirected to the login page :)
 exports.setSingleFilePathToBody = (req, res, next) => {
+
   if (req.file) {
     req.file.path
     req.body[req.file.fieldname] = req.file.filename;

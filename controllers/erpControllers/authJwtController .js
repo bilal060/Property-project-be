@@ -9,11 +9,9 @@ require('dotenv').config({ path: '.variables.env' });
 
 exports.register = async (req, res) => {
   try {
-    console.log(req.body);
-    const { firstName, lastName, email, password, confirmPassword, userType } = req.body;
-
+    const { firstName, lastName, email, password, confirmPassword, userType, photo } = req.body;
     // validate
-    if (!firstName || !lastName || !email || !password || !confirmPassword || !userType)
+    if (!firstName || !lastName || !email || !password || !confirmPassword || !userType || !photo)
       return res.status(400).json({
         success: false,
         result: null,
@@ -37,7 +35,7 @@ exports.register = async (req, res) => {
     const newUser = new User();
     const passwordHash = newUser.generateHash(password);
     await new User({
-      firstName, lastName, email, password: passwordHash, role: cRole._id, photo: `https://ui-avatars.com/api/?name=${firstName}+${lastName}`
+      firstName, lastName, email, password: passwordHash, role: cRole._id, photo: photo
     }).save();
 
     res.json({
@@ -88,7 +86,6 @@ exports.login = async (req, res) => {
         new: true,
       }
     ).exec();
-    console.log(result)
     const token = jwt.sign(
       {
         id: result._id,
@@ -116,7 +113,8 @@ exports.login = async (req, res) => {
           lastName: result.lastName,
           email: result.email,
           createdAt: result.createdAt,
-          isLoggedIn: result.isLoggedIn
+          isLoggedIn: result.isLoggedIn,
+          photo: result.photo
         }
       },
       message: 'Successfully login user',
