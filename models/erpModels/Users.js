@@ -25,6 +25,12 @@ const UserSchema = new Schema({
         trim: true,
         required: true,
     },
+    company: {
+        type: String,
+    },
+    phone: {
+        type: String,
+    },
 
     photo: {
         type: String,

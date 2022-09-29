@@ -5,7 +5,9 @@ require('dotenv').config({ path: '.variables.env' });
 
 exports.isValidAdminToken = async (req, res, next) => {
     try {
+
         const token = req.header("Authorization");
+        console.log(token)
         if (!token)
             return res.status(401).json({
                 success: false,
@@ -60,6 +62,8 @@ exports.isValidAdminToken = async (req, res, next) => {
 exports.isValidAgent = async (req, res, next) => {
     try {
         const token = req.header("Authorization");
+
+
         if (!token)
             return res.status(401).json({
                 success: false,
@@ -103,14 +107,14 @@ exports.isValidAgent = async (req, res, next) => {
                 jwtExpired: true,
             });
         else {
-            req.user = user;
+            req.user = agent;
             next();
         }
     } catch (err) {
         res.status(503).json({
             success: false,
             result: null,
-            message: err.message,
+            message: err?.message,
             error: err,
         });
     }

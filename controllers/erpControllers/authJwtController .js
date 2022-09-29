@@ -194,6 +194,79 @@ exports.login = async (req, res) => {
 //   }
 // };
 
+exports.agents = async (req, res) => {
+  const page = req.query.page || 1;
+  const limit = parseInt(req.query.items) || 10;
+  const skip = page * limit - limit;
+  try {
+    const cRole = await Role.findOne({ roleType: 'agent' });
+    const resultsPromise = await User.find({ role: cRole._id, removed: false })
+      .select('-role -password -removed -enabled -isLoggedIn')
+      .skip(skip)
+      .limit(limit)
+      .sort({ created: 'desc' })
+    // Counting the total documents
+    const countPromise = User.count({ role: cRole._id, removed: false });
+    // Resolving both promises
+    const [result, count] = await Promise.all([resultsPromise, countPromise]);
+    // Calculating total pages
+    const pages = Math.ceil(count / limit);
+    // Getting Pagination Object
+    const pagination = { page, pages, count };
+    if (count > 0) {
+      return res.status(200).json({
+        success: true,
+        result,
+        pagination,
+        message: 'Successfully found all documents',
+      });
+    } else {
+      return res.status(203).json({
+        success: false,
+        result: [],
+        pagination,
+        message: 'Collection is Empty',
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      result: [],
+      message: 'Oops there is an Error',
+      error: err,
+    });
+  }
+};
+
+
+exports.agentById = async (req, res) => {
+  try {
+    const result = await User.findOne({ _id: req.params.id, removed: false }).select('-role -password -removed -enabled -isLoggedIn')
+    // If no results found, return document not found
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        result: null,
+        message: 'No document found by this id: ' + req.params.id,
+      });
+    } else {
+      // Return success resposne
+      return res.status(200).json({
+        success: true,
+        result,
+        message: 'we found this document by this id: ' + req.params.id,
+      });
+    }
+  } catch (err) {
+    // Server Error
+    return res.status(500).json({
+      success: false,
+      result: null,
+      message: 'Oops there is an Error',
+      error: err,
+    });
+  }
+};
 exports.logout = async (req, res) => {
   const result = await Admin.findOneAndUpdate(
     { _id: req.admin._id },

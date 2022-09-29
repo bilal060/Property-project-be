@@ -177,8 +177,7 @@ exports.delete = async (Model, req, res) => {
  */
 
 exports.list = async (Model, req, res) => {
-
-  const { society, phase, block, featured } = req.query
+  const { society, phase, block, featured, user } = req.query
   const page = req.query.page || 1;
   const limit = parseInt(req.query.items) || 10;
   const skip = page * limit - limit;
@@ -208,6 +207,9 @@ exports.list = async (Model, req, res) => {
     if (featured) {
       query.featured = featured
     }
+    if (user) {
+      query.createdBy = user
+    }
     //  Query the database for a list of all results
     const resultsPromise = Model.find(query)
       .skip(skip)
@@ -215,7 +217,7 @@ exports.list = async (Model, req, res) => {
       .sort({ created: 'desc' })
       .populate();
     // Counting the total documents
-    const countPromise = Model.count({ removed: false });
+    const countPromise = Model.count(query);
     // Resolving both promises
     const [result, count] = await Promise.all([resultsPromise, countPromise]);
     // Calculating total pages

@@ -2,8 +2,11 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '.variables.env' });
 const { isValidAdminToken, isValidAgent } = require("./Authentication");
 exports.RoleCheck = async (req, res, next) => {
+
     try {
+
         const token = req.header("Authorization");
+
         if (!token)
             return res.status(401).json({
                 success: false,
@@ -13,7 +16,7 @@ exports.RoleCheck = async (req, res, next) => {
             });
 
         const verified = jwt.verify(token, process.env.JWT_SECRET);
-
+       
         if (!verified)
             return res.status(401).json({
                 success: false,
@@ -36,6 +39,7 @@ exports.RoleCheck = async (req, res, next) => {
         }
 
     } catch (err) {
+        console.log(er)
         res.status(503).json({
             success: false,
             result: null,
