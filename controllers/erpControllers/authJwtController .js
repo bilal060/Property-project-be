@@ -1,12 +1,16 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config({ path: '.variables.env' });
 const { stubFalse } = require('lodash');
 const mongoose = require('mongoose');
 const Admin = mongoose.model('Admin');
 const User = mongoose.model('User');
+const Appointment = mongoose.model('Appointment');
 const Role = mongoose.model('Role');
-require('dotenv').config({ path: '.variables.env' });
-
+const SendMail = require('@/middlewares/SendEmail');
+const MeetingSchedule = require('@/views/EmailTemplates/MeetingSchedule');
+const initScheduledJobs = require('@/middlewares/croneJobs');
+initScheduledJobs
 exports.register = async (req, res) => {
   try {
     const { firstName, lastName, email, password, confirmPassword, userType, photo } = req.body;
@@ -255,6 +259,75 @@ exports.agentById = async (req, res) => {
         success: true,
         result,
         message: 'we found this document by this id: ' + req.params.id,
+      });
+    }
+  } catch (err) {
+    // Server Error
+    return res.status(500).json({
+      success: false,
+      result: null,
+      message: 'Oops there is an Error',
+      error: err,
+    });
+  }
+};
+
+exports.contactAgent = async (req, res) => {
+  try {
+    const result = await User.findOne({ _id: req.params.id, removed: false }).select('-role -password -removed -enabled -isLoggedIn')
+    const appointment = await Appointment.findOne({ appointedTo: req.params.id, createdBy: req.user._id, removed: false, confirmation: false }).select('-role -password -removed -enabled -isLoggedIn')
+    if (appointment) {
+      res.status(400).json({
+        success: true,
+        result: null,
+        message: 'You Already have pending Appointment',
+      });
+    } else {
+      const body = { ...req.body }
+      body.createdBy = req.user._id;
+      body.appointedTo = result._id;
+      await new Appointment(body).save();
+      initScheduledJobs(req.body, result)
+      // const html = MeetingSchedule(req.body, result);
+      // SendMail('awhitlo4@asu.edu', html, "Appointment");
+      res.status(200).json({
+        success: true,
+        result: null,
+        message: 'Successfully Created Appointment',
+      });
+    }
+
+
+  } catch (err) {
+    // Server Error
+    return res.status(500).json({
+      success: false,
+      result: null,
+      message: 'Oops there is an Error',
+      error: err,
+    });
+  }
+};
+
+
+exports.getAppointMents = async (req, res) => {
+  try {
+    const query = { ...req.query }
+    query.removed = false
+    const result = await Appointment.find(query)
+    // If no results found, return document not found
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        result: null,
+        message: 'No appointments Found',
+      });
+    } else {
+      // Return success resposne
+      return res.status(200).json({
+        success: true,
+        result,
+        message: 'Found Appointsments',
       });
     }
   } catch (err) {
