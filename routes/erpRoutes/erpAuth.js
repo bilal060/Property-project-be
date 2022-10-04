@@ -7,6 +7,7 @@ const { catchErrors } = require('@/handlers/errorHandlers');
 const {
   login,
   register,
+  updateUser,
   logout,
   agents,
   agentById,
@@ -28,6 +29,7 @@ var adminPhotoStorage = multer.diskStorage({
 const adminPhotoUpload = multer({ storage: adminPhotoStorage });
 router.route('/login').post(catchErrors(login));
 router.route('/register').post([adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(register));
+router.route('/user/:id').patch(isLoggedin, catchErrors(updateUser));
 router.route('/agents/list').get(catchErrors(agents))
 router.route('/agents/read/:id').get(catchErrors(agentById))
 router.route('/agents/contact/:id').post(isLoggedin, catchErrors(contactAgent));

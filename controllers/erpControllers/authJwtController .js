@@ -118,7 +118,10 @@ exports.login = async (req, res) => {
           email: result.email,
           createdAt: result.createdAt,
           isLoggedIn: result.isLoggedIn,
-          photo: result.photo
+          photo: result.photo,
+          company: result.company,
+          address: result.address,
+          about: result.about,
         }
       },
       message: 'Successfully login user',
@@ -129,74 +132,60 @@ exports.login = async (req, res) => {
 };
 
 
-// exports.login = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
+exports.updateUser = async (req, res) => {
+  try {
+    const body = { ...req.body }
+    body.updatedBy = req.user._id.toString();
+    const result = await User.findOneAndUpdate({ _id: req.params.id, removed: false }, body, {
+      new: true,
+      runValidators: true,
+    }).exec();
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        result: null,
+        message: 'No document found by this id: ' + req.params.id,
+      });
+    } else {
+      res.json({
+        success: true,
+        result: {
+          user: {
+            _id: result._id,
+            firstName: result.firstName,
+            lastName: result.lastName,
+            email: result.email,
+            createdAt: result.createdAt,
+            isLoggedIn: result.isLoggedIn,
+            photo: result.photo,
+            company: result.company,
+            address: result.address,
+            about: result.about,
+          }
+        },
+        message: 'Successfully login user',
+      });
+    }
+  } catch (err) {
+    if (err.name == 'ValidationError') {
+      return res.status(400).json({
+        success: false,
+        result: null,
+        message: 'Required fields are not supplied',
+        error: err,
+      });
+    } else {
+      // Server Error
+      return res.status(500).json({
+        success: false,
+        result: null,
+        message: 'Oops there is an Error',
+        error: err,
+      });
+    }
+  }
+};
 
-//     // validate
-//     if (!email || !password)
-//       return res.status(400).json({
-//         success: false,
-//         result: null,
-//         message: 'Not all fields have been entered.',
-//       });
-
-//     const admin = await Admin.findOne({ email: email, removed: false });
-//     if (!admin)
-//       return res.status(400).json({
-//         success: false,
-//         result: null,
-//         message: 'No account with this email has been registered.',
-//       });
-
-
-//     const isMatch = await bcrypt.compare(password, admin.password);
-//     if (!isMatch)
-//       return res.status(400).json({
-//         success: false,
-//         result: null,
-//         message: 'Invalid credentials.',
-//       });
-
-//     const token = jwt.sign(
-//       {
-//         id: admin._id,
-//       },
-//       process.env.JWT_SECRET,
-//       { expiresIn: '72h' }
-//     );
-
-//     const result = await Admin.findOneAndUpdate(
-//       { _id: admin._id },
-//       { isLoggedIn: true },
-//       {
-//         new: true,
-//       }
-//     ).exec();
-
-//     res.cookie('token', token, {
-//       maxAge: req.body.remember ? 72 * 60 * 60 * 1000 : 60 * 60 * 1000,
-//       sameSite: 'none',
-//       httpOnly: true,
-//       secure: true,
-//     });
-
-//     res.json({
-//       success: true,
-//       result: {
-//         token,
-//         admin: {
-//           id: result._id,
-//           name: result.name,
-//           isLoggedIn: result.isLoggedIn,
-//         },
-//       },
-//       message: 'Successfully login admin',
-//     });
-//   } catch (err) {
-//     res.status(500).json({ success: false, result: null, message: err.message, error: err });
-//   }
-// };
 
 exports.agents = async (req, res) => {
   const page = req.query.page || 1;

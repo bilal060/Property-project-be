@@ -4,8 +4,8 @@ mongoose.Promise = global.Promise;
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new Schema({
-    firstName: { type: String, required: true, lowercase: true },
-    lastName: { type: String, required: true, lowercase: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     removed: {
         type: Boolean,
         default: false,
@@ -31,11 +31,18 @@ const UserSchema = new Schema({
     phone: {
         type: String,
     },
+    address: {
+        type: String,
+    },
+    about: {
+        type: String,
+    },
 
     photo: {
         type: String,
         trim: true,
     },
+
     createdAt: {
         type: Date,
         default: Date.now,
