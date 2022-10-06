@@ -36,14 +36,5 @@ const AppointmentsSchema = new Schema({
 
 AppointmentsSchema.plugin(require('mongoose-autopopulate'));
 
-// generating a hash
-AppointmentsSchema.methods.generateHash = function (password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(), null);
-};
-
-// checking if password is valid
-AppointmentsSchema.methods.validPassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
-};
 
 module.exports = mongoose.model('Appointment', AppointmentsSchema);

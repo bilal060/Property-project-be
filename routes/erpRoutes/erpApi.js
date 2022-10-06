@@ -10,6 +10,8 @@ const societyController = require('@/controllers/erpControllers/societyControlle
 const phaseController = require('@/controllers/erpControllers/phaseController');
 const blockController = require('@/controllers/erpControllers/blockController');
 const propertyController = require('@/controllers/erpControllers/propertyController');
+const eventsController = require('@/controllers/erpControllers/eventsController');
+
 const { isValidAdminToken } = require('@/middlewares/Authentication');
 const { RoleCheck } = require('@/middlewares/RoleChecker');
 const multipleUpload = require('@/middlewares/upload');
@@ -92,5 +94,13 @@ router.route('/property/read/:id').get(catchErrors(propertyController.read));
 router.route('/property/update/:id').patch([RoleCheck, multipleUpload, setMultipleFilePathToBody], catchErrors(propertyController.update));
 router.route('/property/delete/:id').delete(RoleCheck, catchErrors(propertyController.delete));
 
+
+// // --------------------------------- Api for Events ---------------------
+
+router.route('/events/create').post(RoleCheck, catchErrors(eventsController.create));
+router.route('/events/list').get(RoleCheck, catchErrors(eventsController.list));
+router.route('/events/read/:id').get(RoleCheck, catchErrors(eventsController.read));
+router.route('/events/update/:id').patch(RoleCheck, catchErrors(eventsController.update));
+router.route('/events/delete/:id').delete(RoleCheck, catchErrors(eventsController.delete));
 
 module.exports = router;

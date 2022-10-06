@@ -86,7 +86,6 @@ exports.update = async (Model, req, res) => {
   try {
     const body = { ...req.body }
     body.updatedBy = req.user._id.toString();
-    console.log(body)
     // Find document by id and updates with the required fields
     const result = await Model.findOneAndUpdate({ _id: req.params.id, removed: false }, body, {
       new: true, // return the new result instead of the old one
