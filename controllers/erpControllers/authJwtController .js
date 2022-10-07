@@ -163,7 +163,7 @@ exports.updateUser = async (req, res) => {
             about: result.about,
           }
         },
-        message: 'Successfully login user',
+        message: 'Successfully updated profile',
       });
     }
   } catch (err) {
