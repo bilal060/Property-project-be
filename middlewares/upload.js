@@ -13,7 +13,6 @@ const multipleUpload = async (req, res, next) => {
     // }
     next();
   } catch (error) {
-    console.log(error);
 
     if (error.code === "LIMIT_UNEXPECTED_FILE") {
       return res.status(400).json({

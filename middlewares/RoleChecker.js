@@ -39,7 +39,6 @@ exports.RoleCheck = async (req, res, next) => {
         }
 
     } catch (err) {
-        console.log(er)
         res.status(503).json({
             success: false,
             result: null,
