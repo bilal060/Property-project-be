@@ -119,7 +119,8 @@ exports.login = async (req, res) => {
           createdAt: result.createdAt,
           isLoggedIn: result.isLoggedIn,
           photo: result.photo,
-          company: result.company,
+          phone: result.phone,
+          compny: result.company,
           address: result.address,
           about: result.about,
         }
@@ -158,6 +159,7 @@ exports.updateUser = async (req, res) => {
             createdAt: result.createdAt,
             isLoggedIn: result.isLoggedIn,
             photo: result.photo,
+            phone: result.phone,
             company: result.company,
             address: result.address,
             about: result.about,

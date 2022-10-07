@@ -48,6 +48,7 @@ exports.create = async (Model, req, res) => {
     const body = { ...req.body }
     body.createdBy = req.user._id.toString()
     const result = await new Model(body).save();
+    console.log(body)
     // Returning successfull response
     return res.status(200).json({
       success: true,
