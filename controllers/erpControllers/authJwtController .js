@@ -188,6 +188,56 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+exports.resetPassword = async (req, res) => {
+  try {
+    const { currentPassword, password, confirmPassword } = req.body;
+    // validate
+    if (!currentPassword || !password || !confirmPassword)
+      return res.status(400).json({
+        success: false,
+        result: null,
+        message: 'Not all fields have been entered.',
+      });
+    if (password !== confirmPassword)
+      return res.status(400).json({
+        success: false,
+        result: null,
+        message: 'Password and Current Password Are Not Same.',
+      });
+    const user = await User.findOne({ _id: req.user.id, removed: false });
+    if (!user)
+      return res.status(400).json({
+        success: false,
+        result: null,
+        message: 'account not found.',
+      });
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch)
+      return res.status(400).json({
+        success: false,
+        result: null,
+        message: 'Invalid current Passowrd.',
+      });
+    const newUser = new User();
+    const passwordHash = newUser.generateHash(password);
+    const result = await User.findOneAndUpdate(
+      { _id: user._id },
+      { password: passwordHash },
+      {
+        new: true,
+      }
+    ).exec();
+    res.json({
+      success: true,
+      result: null,
+      message: 'Successfully changes password',
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, result: null, message: err.message, error: err });
+  }
+};
+
+
 
 exports.agents = async (req, res) => {
   const page = req.query.page || 1;

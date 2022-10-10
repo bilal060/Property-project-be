@@ -12,7 +12,8 @@ const {
   agents,
   agentById,
   contactAgent,
-  getAppointMents
+  getAppointMents,
+  resetPassword
 } = require('@/controllers/erpControllers/authJwtController ');
 const { isValidAdminToken, isLoggedin } = require('@/middlewares/Authentication');
 const { setSingleFilePathToBody } = require('@/middlewares/setFilePathToBody');
@@ -29,6 +30,7 @@ var adminPhotoStorage = multer.diskStorage({
 const adminPhotoUpload = multer({ storage: adminPhotoStorage });
 router.route('/login').post(catchErrors(login));
 router.route('/register').post([adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(register));
+router.route('/reset-password').patch(isLoggedin, catchErrors(resetPassword));
 router.route('/user/:id').patch(isLoggedin, catchErrors(updateUser));
 router.route('/agents/list').get(catchErrors(agents))
 router.route('/agents/read/:id').get(catchErrors(agentById))
