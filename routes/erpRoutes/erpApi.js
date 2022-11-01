@@ -11,7 +11,7 @@ const phaseController = require('@/controllers/erpControllers/phaseController');
 const blockController = require('@/controllers/erpControllers/blockController');
 const propertyController = require('@/controllers/erpControllers/propertyController');
 const eventsController = require('@/controllers/erpControllers/eventsController');
-
+const fileReaderController = require("@/controllers/erpControllers/fileReaderController")
 const { isValidAdminToken } = require('@/middlewares/Authentication');
 const { RoleCheck } = require('@/middlewares/RoleChecker');
 const multipleUpload = require('@/middlewares/upload');
@@ -19,7 +19,6 @@ const multipleUpload = require('@/middlewares/upload');
 // //_______________________________ Admin management_______________________________
 
 var adminPhotoStorage = multer.diskStorage({
-
   destination: function (req, file, cb) {
     cb(null, 'public/uploads/user');
   },
@@ -28,6 +27,16 @@ var adminPhotoStorage = multer.diskStorage({
   },
 });
 const adminPhotoUpload = multer({ storage: adminPhotoStorage });
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/xlxsFiles");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const fileUpload = multer({ storage: storage });
 
 router
   .route('/admin/create')
@@ -102,5 +111,8 @@ router.route('/events/list').get(RoleCheck, catchErrors(eventsController.list));
 router.route('/events/read/:id').get(RoleCheck, catchErrors(eventsController.read));
 router.route('/events/update/:id').patch(RoleCheck, catchErrors(eventsController.update));
 router.route('/events/delete/:id').delete(RoleCheck, catchErrors(eventsController.delete));
+// ------------------------------------ Testing
+router.route('/readfiledata/:id').post(fileUpload.array("xlsx"), catchErrors(fileReaderController.raedFileData));
+router.route('/getProperties').get(catchErrors(fileReaderController.getPropertiesBySocietyId));
 
 module.exports = router;

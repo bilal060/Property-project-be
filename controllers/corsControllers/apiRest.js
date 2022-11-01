@@ -181,7 +181,7 @@ exports.list = async (Model, req, res) => {
   const limit = parseInt(req.query.items) || 10;
   const skip = page * limit - limit;
   try {
-
+    
     let query = { removed: false }
     if (society) {
       query.society = society
@@ -240,6 +240,7 @@ exports.list = async (Model, req, res) => {
       });
     }
   } catch (err) {
+    console.log(err)
     return res.status(500).json({
       success: false,
       result: [],
