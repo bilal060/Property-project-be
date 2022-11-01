@@ -9,7 +9,6 @@ const url = require("url");
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: '.variables.env' });
 const swaggerui = require("swagger-ui-express");
-const docs = require('./docs');
 const helpers = require('./helpers');
 
 const erpApiRouter = require('./routes/erpRoutes/erpApi');
@@ -44,7 +43,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public'));
 app.use('/api/images', express.static(path.join(__dirname, 'public/uploads/user')));
 
-app.use('/api-docs', swaggerui.serve, swaggerui.setup(docs));
 app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.admin = req.admin || null;
