@@ -11,6 +11,7 @@ exports.raedFileData = async (req, res) => {
     console.log(req.params.id)
     try {
         for (let file of req.files) {
+            console.log(file.path)
             var workbook = XLSX.readFile(file.path);
             var sheet_name_list = workbook.SheetNames;
             let jsonData = XLSX.utils.sheet_to_json(
