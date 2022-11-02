@@ -28,7 +28,7 @@ exports.raedFileData = async (req, res) => {
                 const Property = await PropertiesListing.findOne({ PlotNo: items.PlotNo })
                 if (result && Property === null) {
                     items.Society = req.params.id
-                    items.owner = result._id
+                    items.owner = result._id 
                     await new PropertiesListing(items).save();
                 } else if (result === null && Property === null) {
                     const result = await new PropertyOwners(items).save();
