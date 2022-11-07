@@ -11,6 +11,7 @@ exports.createCRUDController = (modelName, filter = []) => {
     crudMethods.read = async (req, res) => {
       apiRest.read(Model, req, res);
     };
+   
   }
   if (!filter.includes('update')) {
     crudMethods.update = async (req, res) => {

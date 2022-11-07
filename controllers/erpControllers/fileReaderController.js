@@ -1,14 +1,12 @@
 require('dotenv').config({ path: '.variables.env' });
-const { stubFalse } = require('lodash');
 const mongoose = require('mongoose');
 var fs = require('fs');
 const PropertyOwners = mongoose.model('PropertyOwners');
 const PropertiesListing = mongoose.model('PropertiesListing');
-
 const XLSX = require("xlsx");
+const FileUploadFields = require('@/middlewares/schemeFieldsValidtor');
 
 exports.raedFileData = async (req, res) => {
-    console.log("asdasdasdasd", req.params.id)
     try {
         for (let file of req.files) {
             console.log(file.path)
@@ -21,6 +19,28 @@ exports.raedFileData = async (req, res) => {
                 return res.status(400).json({
                     success: false,
                     message: "xml sheet has no data",
+                });
+            }
+            // const keys = Object.keys(data);
+            // const fileds = ["MembershipNo", "FullName", "CNIC", "TelNO", "CellNo", "MailingAddress", "City", "Rank", "Regt", "PlotSize", "FileNo", "PlotNo", "Phase", "Sector", "SubProject", "RefNo", "SecNo", "CommunityCenter"];
+            // var difference = fileds.filter(x => !keys.includes(x));
+            const difference = await FileUploadFields(jsonData[0]);
+            console.log(difference)
+            if (difference.length > 0) {
+                return res.status(400).json({
+                    success: false,
+                    result: [],
+                    fields: difference,
+                    message: 'invalid file schema',
+                });
+            }
+
+            if (difference.length > 0) {
+                return res.status(500).json({
+                    success: false,
+                    result: [],
+                    fields: difference,
+                    message: 'invalid file schema',
                 });
             }
             for (let items of jsonData) {
@@ -41,7 +61,7 @@ exports.raedFileData = async (req, res) => {
                 if (err) throw err;
                 console.log('File deleted!');
             });
-            return res.status(201).json("jsonData");;
+            return res.status(201).json("jsonData");
         }
 
     } catch (err) {
@@ -63,20 +83,17 @@ exports.getPropertiesBySocietyId = async (req, res) => {
             query.society = society
 
         }
-        //  Query the database for a list of all results
+
         const resultsPromise = PropertiesListing.find(query)
             .skip(skip)
-            .limit(limit)
+            // .limit(limit)
             .sort({ created: 'desc' })
             .populate();
-        // Counting the total documents
         const countPromise = PropertiesListing.count(query);
-        // Resolving both promises
         const [result, count] = await Promise.all([resultsPromise, countPromise]);
-        // Calculating total pages
         const pages = Math.ceil(count / limit);
 
-        // Getting Pagination Object
+
         const pagination = { page, pages, count };
 
 
