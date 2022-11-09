@@ -1,9 +1,11 @@
 const express = require('express');
-const multer = require('multer');
+const router = express.Router();
 const path = require('path');
 const { setSingleFilePathToBody, setMultipleFilePathToBody } = require('@/middlewares/setFilePathToBody');
 const { catchErrors } = require('@/handlers/errorHandlers');
-const router = express.Router();
+var multer = require("multer");
+const { v4: uuidv4 } = require("uuid");
+
 const adminController = require('@/controllers/erpControllers/adminController');
 const roleController = require('@/controllers/erpControllers/roleController');
 const societyController = require('@/controllers/erpControllers/societyController');
@@ -15,6 +17,8 @@ const fileReaderController = require("@/controllers/erpControllers/fileReaderCon
 const { isValidAdminToken } = require('@/middlewares/Authentication');
 const { RoleCheck } = require('@/middlewares/RoleChecker');
 const multipleUpload = require('@/middlewares/upload');
+const WhatsAppCntrl = require('@/controllers/erpControllers/whatsAppController');
+
 
 // //_______________________________ Admin management_______________________________
 
@@ -37,6 +41,27 @@ var storage = multer.diskStorage({
 });
 
 const fileUpload = multer({ storage: storage });
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/Assets/sent");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.originalname.substring(file.originalname.indexOf(".") + 1);
+    if (req.body.mediaType === 'audio' && ext !== 'mp3') {
+      const uuid = uuidv4();
+      cb(null, uuid + "." + 'ogg');
+      req.body["fileName"] = uuid + "." + 'ogg';
+    }
+    else {
+      const uuid = uuidv4();
+
+      cb(null, uuid + "." + ext);
+      req.body["fileName"] = uuid + "." + ext;
+    }
+  },
+});
+
+const WhatsAppfileUpload = multer({ storage: storage });
 
 router
   .route('/admin/create')
@@ -79,7 +104,6 @@ router.route('/society/delete/:id').delete(isValidAdminToken, catchErrors(societ
 router.route('/society/getPictureByPath/:path').get(catchErrors(societyController.getPictureByPath));
 
 
-
 // // ---------------------------------Api for Phases----------------
 router.route('/phase/create').post([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(phaseController.create));
 router.route('/phase/list').get(catchErrors(phaseController.list));
@@ -111,8 +135,16 @@ router.route('/events/list').get(RoleCheck, catchErrors(eventsController.list));
 router.route('/events/read/:id').get(RoleCheck, catchErrors(eventsController.read));
 router.route('/events/update/:id').patch(RoleCheck, catchErrors(eventsController.update));
 router.route('/events/delete/:id').delete(RoleCheck, catchErrors(eventsController.delete));
-// ------------------------------------ Testing
+// ------------------------------------ File Reader
 router.route('/readfiledata/:id').post(fileUpload.array("xlsx"), catchErrors(fileReaderController.raedFileData));
 router.route('/getProperties').get(catchErrors(fileReaderController.getPropertiesBySocietyId));
 
+//  ---------------------------------- WhatsApp Route
+router.post("/createMsg", WhatsAppCntrl.CreateMessage)
+router.get("/createMsg", WhatsAppCntrl.createMsgGet)
+router.get("/loadfile", WhatsAppCntrl.loadFile)
+router.get("/loadAllMesssages", WhatsAppCntrl.loadAllMessages)
+router.get("/last_message", WhatsAppCntrl.lastMessage)
+router.post("/send_text_message", WhatsAppCntrl.sendTextMessage)
+router.post("/send_multimedia_message", fileUpload.single("file"), WhatsAppCntrl.sendMultiMediaMessage)
 module.exports = router;

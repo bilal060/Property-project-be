@@ -31,7 +31,7 @@ exports.raedFileData = async (req, res) => {
                     success: false,
                     result: [],
                     fields: difference,
-                    message: 'invalid file schema',
+                    message: 'invalid file fields',
                 });
             }
 
@@ -86,7 +86,7 @@ exports.getPropertiesBySocietyId = async (req, res) => {
 
         const resultsPromise = PropertiesListing.find(query)
             .skip(skip)
-            // .limit(limit)
+            .limit(limit)
             .sort({ created: 'desc' })
             .populate();
         const countPromise = PropertiesListing.count(query);
