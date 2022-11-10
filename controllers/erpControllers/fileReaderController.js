@@ -24,25 +24,25 @@ exports.raedFileData = async (req, res) => {
             // const keys = Object.keys(data);
             // const fileds = ["MembershipNo", "FullName", "CNIC", "TelNO", "CellNo", "MailingAddress", "City", "Rank", "Regt", "PlotSize", "FileNo", "PlotNo", "Phase", "Sector", "SubProject", "RefNo", "SecNo", "CommunityCenter"];
             // var difference = fileds.filter(x => !keys.includes(x));
-            const difference = await FileUploadFields(jsonData[0]);
-            console.log(difference)
-            if (difference.length > 0) {
-                return res.status(400).json({
-                    success: false,
-                    result: [],
-                    fields: difference,
-                    message: 'invalid file fields',
-                });
-            }
+            // const difference = await FileUploadFields(jsonData[0]);
+            // console.log(difference)
+            // if (difference.length > 0) {
+            //     return res.status(400).json({
+            //         success: false,
+            //         result: [],
+            //         fields: difference,
+            //         message: 'invalid file fields',
+            //     });
+            // }
 
-            if (difference.length > 0) {
-                return res.status(500).json({
-                    success: false,
-                    result: [],
-                    fields: difference,
-                    message: 'invalid file schema',
-                });
-            }
+            // if (difference.length > 0) {
+            //     return res.status(500).json({
+            //         success: false,
+            //         result: [],
+            //         fields: difference,
+            //         message: 'invalid file schema',
+            //     });
+            // }
             for (let items of jsonData) {
                 const result = await PropertyOwners.findOne({ CNIC: items.CNIC })
                 const Property = await PropertiesListing.findOne({ PlotNo: items.PlotNo })
