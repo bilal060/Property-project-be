@@ -18,6 +18,7 @@ const { isValidAdminToken } = require('@/middlewares/Authentication');
 const { RoleCheck } = require('@/middlewares/RoleChecker');
 const multipleUpload = require('@/middlewares/upload');
 const WhatsAppCntrl = require('@/controllers/erpControllers/whatsAppController');
+const { numberChecker } = require('@/middlewares/WhatsAppProcesser/numberCheckAndSave');
 
 
 // //_______________________________ Admin management_______________________________
@@ -140,10 +141,11 @@ router.route('/readfiledata/:id').post(fileUpload.array("xlsx"), catchErrors(fil
 router.route('/getProperties').get(catchErrors(fileReaderController.getPropertiesBySocietyId));
 
 //  ---------------------------------- WhatsApp Route
-router.post("/createMsg", WhatsAppCntrl.CreateMessage)
+router.post("/createMsg", numberChecker, WhatsAppCntrl.CreateMessage)
 router.get("/createMsg", WhatsAppCntrl.createMsgGet)
 router.get("/loadfile", WhatsAppCntrl.loadFile)
 router.get("/loadAllMesssages", WhatsAppCntrl.loadAllMessages)
+router.get("/loadmessagebyuser/:number", WhatsAppCntrl.loadMessageByUser)
 router.get("/last_message", WhatsAppCntrl.lastMessage)
 router.post("/send_text_message", WhatsAppCntrl.sendTextMessage)
 router.post("/send_multimedia_message", fileUpload.single("file"), WhatsAppCntrl.sendMultiMediaMessage)

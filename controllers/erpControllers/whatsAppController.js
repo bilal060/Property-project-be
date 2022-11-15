@@ -12,25 +12,25 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                    "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                             },
                         }
                     )
                     .then((resp) => {
                         axios
                             .get(resp?.data?.url, {
-                                responseType: "stream",
+                                resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                                 },
                             })
-                            .then(async (response) => {
+                            .then(async (res) => {
                                 try {
                                     const writer = fs.createWriteStream(
                                         `./Assets/Received/${asBody.messages[0].id}.jpeg`
                                     );
-                                    response.data.pipe(writer);
+                                    res.data.pipe(writer);
                                     const result = await new message({
                                         message: { body: asBody, way: "receive" },
                                     }).save();
@@ -61,7 +61,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                    "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                             },
                         }
                     )
@@ -69,18 +69,18 @@ const WhatsAppCntrl = {
                         //console.log(resp?.data);
                         axios
                             .get(resp?.data?.url, {
-                                responseType: "stream",
+                                resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                                 },
                             })
-                            .then(async (response) => {
+                            .then(async (res) => {
                                 try {
                                     const writer = fs.createWriteStream(
                                         `./Assets/Received/${asBody.messages[0].id}.ogg`
                                     );
-                                    response.data.pipe(writer);
+                                    res.data.pipe(writer);
                                     const result = await new message({
                                         message: { body: asBody, way: "receive" },
                                     }).save();
@@ -109,25 +109,25 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                    "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                             },
                         }
                     )
                     .then((resp) => {
                         axios
                             .get(resp?.data?.url, {
-                                responseType: "stream",
+                                resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                                 },
                             })
-                            .then(async (response) => {
+                            .then(async (res) => {
                                 try {
                                     const writer = fs.createWriteStream(
                                         `./Assets/Received/${asBody.messages[0].id}.pdf`
                                     );
-                                    response.data.pipe(writer);
+                                    res.data.pipe(writer);
                                     const result = await new message({
                                         message: { body: asBody, way: "receive" },
                                     }).save();
@@ -160,7 +160,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                    "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                             },
                         }
                     )
@@ -168,18 +168,18 @@ const WhatsAppCntrl = {
                         //console.log(resp?.data);
                         axios
                             .get(resp?.data?.url, {
-                                responseType: "stream",
+                                resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                                 },
                             })
-                            .then(async (response) => {
+                            .then(async (res) => {
                                 try {
                                     const writer = fs.createWriteStream(
                                         `./Assets/Received/${asBody.messages[0].id}.mp4`
                                     );
-                                    response.data.pipe(writer);
+                                    res.data.pipe(writer);
                                     const result = await new message({
                                         message: { body: asBody, way: "receive" },
                                     }).save();
@@ -205,7 +205,8 @@ const WhatsAppCntrl = {
                     .catch((err) => {
                     });
             }
-            else {
+            else if (asBody.messages[0].type === "text") {
+                console.log(asBody.messages[0].type)
                 const result = await new message({
                     message: { body: asBody, way: "receive" },
                 }).save();
@@ -215,13 +216,17 @@ const WhatsAppCntrl = {
                     message: "Successfully Created",
                 });
             }
+
         } catch (err) {
             return res.status(500).json({
                 success: false,
                 result: null,
                 message: "Error",
                 error: err,
-            });
+            })
+        }
+        finally {
+            return res.status(200);
         }
     }
     ,
@@ -232,11 +237,11 @@ const WhatsAppCntrl = {
             return res.status(200).send(challenge);
         }
     },
-    loadFile: (request, response) => {
-        const messageFileId = request.query.messageId;
-        const mediaType = request.query.fileType;
+    loadFile: (req, res) => {
+        const messageFileId = req.query.messageId;
+        const mediaType = req.query.fileType;
 
-        if (request.query.way === "received") {
+        if (req.query.way === "received") {
             var filePath = path.join(
                 __dirname,
                 mediaType === "audio"
@@ -249,7 +254,7 @@ const WhatsAppCntrl = {
                                 ? `./Assets/Received/${messageFileId}.pdf`
                                 : `./Assets/Received/${messageFileId}.bin`
             );
-        } else if (request.query.way === "sent") {
+        } else if (req.query.way === "sent") {
             var filePath = path.join(
                 __dirname,
                 mediaType === "audio"
@@ -261,10 +266,10 @@ const WhatsAppCntrl = {
                             : `./Assets/sent/${messageFileId}`
             );
         } else {
-            response.status(500).send();
+            res.status(500).send();
         }
         var stat = fs.statSync(filePath);
-        response.writeHead(200, {
+        res.writeHead(200, {
             "Content-Type":
                 mediaType === "audio"
                     ? `audio/ogg`
@@ -280,24 +285,36 @@ const WhatsAppCntrl = {
 
         var readStream = fs.createReadStream(filePath);
         readStream.on("data", function (data) {
-            response.write(data);
+            res.write(data);
         });
 
         readStream.on("end", function () {
-            response.end();
+            res.end();
         });
 
     },
-    loadAllMessages: async (request, response) => {
+    loadAllMessages: async (req, res) => {
+
         const messages = await message
             .find({
-                "message.messages.type": request.body.messageType,
-                "message.contacts.wa_id": request.body.number,
+                "message.messages.type": req.body.messageType,
+                "message.contacts.wa_id": req.body.number,
             })
             .sort({ createdAt: "-1" })
             .exec();
 
-        response.status(200).send(messages);
+        res.status(200).send(messages);
+    },
+    loadMessageByUser: async (req, res) => {
+
+        const messages = await message
+            .find({
+                "message.contacts[0].wa_id": req.params.number,
+            })
+            .sort({ createdAt: "-1" })
+            .exec();
+
+        res.status(200).send(messages);
     },
     lastMessage: async (req, res) => {
         try {
@@ -319,7 +336,7 @@ const WhatsAppCntrl = {
     sendTextMessage: async (req, res) => {
         axios
             .post(
-                `https://graph.facebook.com/v15.0/106183675617980/messages`,
+                `https://graph.facebook.com/v15.0/802852581006295/messages`,
                 {
                     messaging_product: "whatsapp",
                     recipient_type: "individual",
@@ -333,7 +350,7 @@ const WhatsAppCntrl = {
                 {
                     headers: {
                         Authorization:
-                            "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                            "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                     },
                 }
             )
@@ -372,12 +389,12 @@ const WhatsAppCntrl = {
         try {
             axios
                 .post(
-                    `https://graph.facebook.com/v15.0/106183675617980/media`,
+                    `https://graph.facebook.com/v15.0/802852581006295/media`,
                     formData,
                     {
                         headers: {
                             Authorization:
-                                "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                         },
                     }
                 )
@@ -394,12 +411,12 @@ const WhatsAppCntrl = {
                     }
                     axios
                         .post(
-                            `https://graph.facebook.com/v15.0/106183675617980/messages`,
+                            `https://graph.facebook.com/v15.0/802852581006295/messages`,
                             msg,
                             {
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALy5OfzdYwBADT9hfftheGAJsIk226GHRC7maLSe7RZAZBmHkNSHtzZBbMmjibskZCAYKO6J9Dem7a4uQO1SlPLNULxnMOm0dAsr8vPUnBMhh3dAblrHamk7yyAHv4IZB4vVY8MJxvTHChwKgzYMDTPFLfRcEYQlt5SR2pgWL90bugdZBIzSxHr7qBhHp0Q5jO7yyTQKDwAZDZD",
+                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
                                 },
                             }
                         )
@@ -421,6 +438,7 @@ const WhatsAppCntrl = {
                         })
                 });
         } catch (err) {
+            console.log(err)
             res.status(200).send()
         }
     }
