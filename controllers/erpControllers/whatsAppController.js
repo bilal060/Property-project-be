@@ -1,5 +1,7 @@
 const axios = require("axios");
-const message = require("@/models/erpModels/messageModel")
+const message = require("@/models/erpModels/messageModel");
+const customerWhatsAppInfo = require("@/models/erpModels/customerWhatsAppInfo");
+
 const WhatsAppCntrl = {
     CreateMessage: async (req, res) => {
         try {
@@ -294,7 +296,6 @@ const WhatsAppCntrl = {
 
     },
     loadAllMessages: async (req, res) => {
-
         const messages = await message
             .find({
                 "message.messages.type": req.body.messageType,
@@ -306,15 +307,24 @@ const WhatsAppCntrl = {
         res.status(200).send(messages);
     },
     loadMessageByUser: async (req, res) => {
+        try {
+            console.log(req.params.number)
+            const messages = await message
+                .find({
+                    "message.body.contacts.wa_id": req.params.number,
+                })
+                .sort({ createdAt: "-1" })
+                .exec();
 
-        const messages = await message
-            .find({
-                "message.contacts[0].wa_id": req.params.number,
-            })
-            .sort({ createdAt: "-1" })
-            .exec();
-
-        res.status(200).send(messages);
+            res.status(200).send(messages);
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                result: null,
+                message: "Error",
+                error: err,
+            });
+        }
     },
     lastMessage: async (req, res) => {
         try {
@@ -441,7 +451,24 @@ const WhatsAppCntrl = {
             console.log(err)
             res.status(200).send()
         }
-    }
+    },
+    getAllWhatsAppProfiles: async (req, res) => {
+        try {
+            const resultsPromise = await customerWhatsAppInfo.find().sort({ _id: -1 })
+            return res.status(200).json({
+                success: true,
+                result: resultsPromise,
+                message: "Successfully Get",
+            });
+        } catch (err) {
+            return res.status(500).json({
+                success: false,
+                result: null,
+                message: "Error",
+                error: err,
+            });
+        }
+    },
 }
 
 module.exports = WhatsAppCntrl

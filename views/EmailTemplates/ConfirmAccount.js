@@ -155,7 +155,7 @@ const ConfirmAccount = (url) => {
       cellspacing="0"
       cellpadding="0"
       align="center"
-      class="full"
+     className="full"
     >
       <tr>
         <td align="center">
@@ -165,7 +165,7 @@ const ConfirmAccount = (url) => {
             cellspacing="0"
             cellpadding="0"
             align="center"
-            class="devicewidth"
+           className="devicewidth"
           >
             <tr>
               <td>
@@ -176,7 +176,7 @@ const ConfirmAccount = (url) => {
                   cellspacing="0"
                   cellpadding="0"
                   align="center"
-                  class="full"
+                 className="full"
                   style="background-color: #ffffff; border-radius: 5px 5px 0 0"
                 >
                   <tr>
@@ -187,7 +187,7 @@ const ConfirmAccount = (url) => {
                         border="0"
                         cellspacing="0"
                         cellpadding="0"
-                        class="inner"
+                       className="inner"
                         style="text-align: center"
                       >
                         <tr>
@@ -216,11 +216,11 @@ const ConfirmAccount = (url) => {
                         border="0"
                         cellspacing="0"
                         cellpadding="0"
-                        class="inner"
+                       className="inner"
                         style="text-align: center"
                       >
                         <tr>
-                          <td class="hide" height="22">&nbsp;</td>
+                          <tdclassName="hide" height="22">&nbsp;</td>
                         </tr>
                         <tr>
                           <td height="10">&nbsp;</td>
@@ -287,7 +287,7 @@ const ConfirmAccount = (url) => {
       cellspacing="0"
       cellpadding="0"
       align="center"
-      class="full"
+     className="full"
     >
       <tr>
         <td align="center">
@@ -297,7 +297,7 @@ const ConfirmAccount = (url) => {
             cellspacing="0"
             cellpadding="0"
             align="center"
-            class="devicewidth"
+           className="devicewidth"
           >
             <tr>
               <td>
@@ -308,11 +308,11 @@ const ConfirmAccount = (url) => {
                   cellspacing="0"
                   cellpadding="0"
                   align="center"
-                  class="full"
+                 className="full"
                   style="text-align: center; border-bottom: 1px solid #e5e5e5"
                 >
                   <tr>
-                    <td class="heightsmalldevices" height="40">&nbsp;</td>
+                    <tdclassName="heightsmalldevices" height="40">&nbsp;</td>
                   </tr>
                   <tr>
                     <td
@@ -437,7 +437,7 @@ const ConfirmAccount = (url) => {
                     </td>
                   </tr>
                   <tr>
-                    <td class="heightsmalldevices" height="79">&nbsp;</td>
+                    <tdclassName="heightsmalldevices" height="79">&nbsp;</td>
                   </tr>
                 </table>
               </td>
@@ -453,7 +453,7 @@ const ConfirmAccount = (url) => {
       cellspacing="0"
       cellpadding="0"
       align="center"
-      class="full"
+     className="full"
     >
       <tr>
         <td align="center">
@@ -463,7 +463,7 @@ const ConfirmAccount = (url) => {
             cellspacing="0"
             cellpadding="0"
             align="center"
-            class="devicewidth"
+           className="devicewidth"
           >
             <tr>
               <td>
@@ -474,7 +474,7 @@ const ConfirmAccount = (url) => {
                   cellspacing="0"
                   cellpadding="0"
                   align="center"
-                  class="full"
+                 className="full"
                   style="border-radius: 0 0 5px 5px"
                 >
                   <tr>
@@ -494,7 +494,7 @@ const ConfirmAccount = (url) => {
                           mso-table-rspace: 0pt;
                           text-align: center;
                         "
-                        class="inner"
+                       className="inner"
                       >
                         <tr>
                           <td width="21">&nbsp;</td>
@@ -514,7 +514,7 @@ const ConfirmAccount = (url) => {
                                     cellspacing="0"
                                     cellpadding="0"
                                     align="center"
-                                    class="full"
+                                   className="full"
                                   >
                                     <tr>
                                       <td
@@ -573,7 +573,7 @@ const ConfirmAccount = (url) => {
                                           Send to a friend</a
                                         >
                                       </td>
-                                      <td class="hide" width="40" align="right">
+                                      <tdclassName="hide" width="40" align="right">
                                         &nbsp;
                                       </td>
                                     </tr>
@@ -599,7 +599,7 @@ const ConfirmAccount = (url) => {
                           mso-table-rspace: 0pt;
                           text-align: center;
                         "
-                        class="inner"
+                       className="inner"
                       >
                         <tr>
                           <td width="21">&nbsp;</td>
@@ -635,7 +635,7 @@ const ConfirmAccount = (url) => {
                 </table>
               </td>
             </tr>
-            <tr class="mhide">
+            <trclassName="mhide">
               <td height="100">&nbsp;</td>
             </tr>
           </table>
