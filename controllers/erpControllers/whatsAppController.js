@@ -14,7 +14,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                    "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                             },
                         }
                     )
@@ -24,15 +24,15 @@ const WhatsAppCntrl = {
                                 resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                                 },
                             })
-                            .then(async (res) => {
+                            .then(async (respp) => {
                                 try {
                                     const writer = fs.createWriteStream(
                                         `./Assets/Received/${asBody.messages[0].id}.jpeg`
                                     );
-                                    res.data.pipe(writer);
+                                    respp.data.pipe(writer);
                                     const result = await new message({
                                         message: { body: asBody, way: "receive" },
                                     }).save();
@@ -63,7 +63,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                    "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                             },
                         }
                     )
@@ -74,7 +74,7 @@ const WhatsAppCntrl = {
                                 resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                                 },
                             })
                             .then(async (res) => {
@@ -111,7 +111,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                    "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                             },
                         }
                     )
@@ -121,7 +121,7 @@ const WhatsAppCntrl = {
                                 resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                                 },
                             })
                             .then(async (res) => {
@@ -162,7 +162,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                    "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                             },
                         }
                     )
@@ -173,7 +173,7 @@ const WhatsAppCntrl = {
                                 resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                                 },
                             })
                             .then(async (res) => {
@@ -346,7 +346,7 @@ const WhatsAppCntrl = {
     sendTextMessage: async (req, res) => {
         axios
             .post(
-                `https://graph.facebook.com/v15.0/802852581006295/messages`,
+                `https://graph.facebook.com/v15.0/100381879573581/messages`,
                 {
                     messaging_product: "whatsapp",
                     recipient_type: "individual",
@@ -360,7 +360,7 @@ const WhatsAppCntrl = {
                 {
                     headers: {
                         Authorization:
-                            "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                            "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                     },
                 }
             )
@@ -399,12 +399,12 @@ const WhatsAppCntrl = {
         try {
             axios
                 .post(
-                    `https://graph.facebook.com/v15.0/802852581006295/media`,
+                    `https://graph.facebook.com/v15.0/100381879573581/media`,
                     formData,
                     {
                         headers: {
                             Authorization:
-                                "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                         },
                     }
                 )
@@ -421,12 +421,12 @@ const WhatsAppCntrl = {
                     }
                     axios
                         .post(
-                            `https://graph.facebook.com/v15.0/802852581006295/messages`,
+                            `https://graph.facebook.com/v15.0/100381879573581/messages`,
                             msg,
                             {
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBADCh2glxDQfm4HYEgvTeKuTo7AQ4Dak7SeAgLalHCZBecmDOqUF7e56FxZBeWaRyouqujM3xQn0CDxZC42HgSrwyZBGYQjQIltdwmIlo3rN76vWe3dqgQ40JLhn1WFGtQKrhtzhynZAgRrn703UqjBHl4QLRJtb9taEE60faOGyqtoKxu0qnWQIDooj9MKwZDZD",
+                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
                                 },
                             }
                         )
