@@ -13,7 +13,9 @@ const {
   agentById,
   contactAgent,
   getAppointMents,
-  resetPassword
+  resetPassword,
+  getUserList,
+  getRolesList
 } = require('@/controllers/erpControllers/authJwtController ');
 const { isValidAdminToken, isLoggedin } = require('@/middlewares/Authentication');
 const { setSingleFilePathToBody } = require('@/middlewares/setFilePathToBody');
@@ -36,6 +38,9 @@ router.route('/agents/list').get(catchErrors(agents))
 router.route('/agents/read/:id').get(catchErrors(agentById))
 router.route('/agents/contact/:id').post(isLoggedin, catchErrors(contactAgent));
 router.route('/agents/appointements/list').get(isLoggedin, catchErrors(getAppointMents));
+router.route('/userlist').get(isValidAdminToken, catchErrors(getUserList));
+router.route('/roleslist').get(isValidAdminToken, catchErrors(getRolesList));
 router.route('/logout').post(isValidAdminToken, catchErrors(logout));
+
 
 module.exports = router;

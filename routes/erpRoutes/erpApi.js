@@ -19,6 +19,7 @@ const { RoleCheck } = require('@/middlewares/RoleChecker');
 const multipleUpload = require('@/middlewares/upload');
 const WhatsAppCntrl = require('@/controllers/erpControllers/whatsAppController');
 const { numberChecker } = require('@/middlewares/WhatsAppProcesser/numberCheckAndSave');
+const SocialLoginCntrl = require('@/controllers/erpControllers/socialLoginCntrl');
 
 
 // //_______________________________ Admin management_______________________________
@@ -150,4 +151,9 @@ router.get("/loadmessagebyuser/:number", WhatsAppCntrl.loadMessageByUser)
 router.get("/last_message", WhatsAppCntrl.lastMessage)
 router.post("/send_text_message", WhatsAppCntrl.sendTextMessage)
 router.post("/send_multimedia_message", WhatsAppfileUpload.single("file"), WhatsAppCntrl.sendMultiMediaMessage)
+//  ---------------------------------- Social Login Route
+router.post("/socialregister", SocialLoginCntrl.register)
+router.post("/sociallogin", SocialLoginCntrl.login)
+
+
 module.exports = router;

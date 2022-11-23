@@ -26,26 +26,38 @@ exports.isValidAdminToken = async (req, res, next) => {
             });
 
         const admin = await User.findOne({ _id: verified.id, removed: false });
-        if (!admin)
+        if (!admin) {
             return res.status(401).json({
                 success: false,
                 result: null,
                 message: "Admin doens't Exist, authorization denied.",
                 jwtExpired: true,
             });
+        }
 
-        if (admin.isLoggedIn === false)
+        if (admin.isLoggedIn === false) {
             return res.status(401).json({
                 success: false,
                 result: null,
                 message: 'Admin is already logout try to login, authorization denied.',
                 jwtExpired: true,
             });
+        }
+
+        if (admin.role.roleType !== 'superadmin')
+            return res.status(401).json({
+                success: false,
+                result: null,
+                message: 'Access denied',
+                jwtExpired: true,
+            });
+
         else {
             req.user = admin;
             next();
         }
     } catch (err) {
+        console.log(err)
         res.status(503).json({
             success: false,
             result: null,

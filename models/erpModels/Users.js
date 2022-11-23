@@ -10,6 +10,19 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    isFacebookLogin: {
+        type: Boolean,
+        default: false,
+    },
+    isGoogleLogin: {
+        type: Boolean,
+        default: false,
+    },
+    isSocialLogin: {
+        type: Boolean,
+        default: false,
+    },
+    socialId: { type: String, required: true, default: null },
     enabled: {
         type: Boolean,
         default: true,

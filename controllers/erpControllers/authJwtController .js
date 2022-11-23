@@ -381,6 +381,107 @@ exports.getAppointMents = async (req, res) => {
     });
   }
 };
+
+exports.getUserList = async (req, res) => {
+
+  const page = req.query.page || 1;
+  const limit = parseInt(req.query.items) || 10;
+  const skip = page * limit - limit;
+
+  try {
+
+    let query = { removed: false }
+    //  Query the database for a list of all results
+    const resultsPromise = User.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort({ created: 'desc' })
+      .populate();
+    // Counting the total documents
+    const countPromise = User.count(query);
+    // Resolving both promises
+    const [result, count] = await Promise.all([resultsPromise, countPromise]);
+    // Calculating total pages
+    const pages = Math.ceil(count / limit);
+
+    // Getting Pagination Object
+    const pagination = { page, pages, count };
+    console.log(result)
+    if (count > 0) {
+      return res.status(200).json({
+        success: true,
+        result,
+        pagination,
+        message: 'Successfully found all documents',
+      });
+    } else {
+      return res.status(203).json({
+        success: false,
+        result: [],
+        pagination,
+        message: 'Collection is Empty',
+      });
+    }
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({
+      success: false,
+      result: [],
+      message: 'Oops there is an Error',
+      error: err,
+    });
+  }
+};
+exports.getRolesList = async (req, res) => {
+
+  const page = req.query.page || 1;
+  const limit = parseInt(req.query.items) || 10;
+  const skip = page * limit - limit;
+
+  try {
+
+    let query = { removed: false }
+    //  Query the database for a list of all results
+    const resultsPromise = Role.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort({ created: 'desc' })
+      .populate();
+    // Counting the total documents
+    const countPromise = Role.count(query);
+    // Resolving both promises
+    const [result, count] = await Promise.all([resultsPromise, countPromise]);
+    // Calculating total pages
+    const pages = Math.ceil(count / limit);
+
+    // Getting Pagination Object
+    const pagination = { page, pages, count };
+    console.log(result)
+    if (count > 0) {
+      return res.status(200).json({
+        success: true,
+        result,
+        pagination,
+        message: 'Successfully found all documents',
+      });
+    } else {
+      return res.status(203).json({
+        success: false,
+        result: [],
+        pagination,
+        message: 'Collection is Empty',
+      });
+    }
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({
+      success: false,
+      result: [],
+      message: 'Oops there is an Error',
+      error: err,
+    });
+  }
+};
 exports.logout = async (req, res) => {
   const result = await Admin.findOneAndUpdate(
     { _id: req.admin._id },
