@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '../../../.variables.env' });
 const axios = require("axios");
 const message = require("@/models/erpModels/messageModel");
 const customerWhatsAppInfo = require("@/models/erpModels/customerWhatsAppInfo");
@@ -14,7 +15,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                    `Bearer ${process.env.FacebookToken}`,
                             },
                         }
                     )
@@ -24,7 +25,7 @@ const WhatsAppCntrl = {
                                 resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                        `Bearer ${process.env.FacebookToken}`,
                                 },
                             })
                             .then(async (respp) => {
@@ -63,7 +64,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                    `Bearer ${process.env.FacebookToken}`,
                             },
                         }
                     )
@@ -74,7 +75,7 @@ const WhatsAppCntrl = {
                                 resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                        `Bearer ${process.env.FacebookToken}`,
                                 },
                             })
                             .then(async (res) => {
@@ -111,7 +112,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                    `Bearer ${process.env.FacebookToken}`,
                             },
                         }
                     )
@@ -121,7 +122,7 @@ const WhatsAppCntrl = {
                                 resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                        `Bearer ${process.env.FacebookToken}`,
                                 },
                             })
                             .then(async (res) => {
@@ -162,7 +163,7 @@ const WhatsAppCntrl = {
                         {
                             headers: {
                                 Authorization:
-                                    "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                    `Bearer ${process.env.FacebookToken}`,
                             },
                         }
                     )
@@ -173,7 +174,7 @@ const WhatsAppCntrl = {
                                 resType: "stream",
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                        `Bearer ${process.env.FacebookToken}`,
                                 },
                             })
                             .then(async (res) => {
@@ -360,7 +361,7 @@ const WhatsAppCntrl = {
                 {
                     headers: {
                         Authorization:
-                            "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                            `Bearer ${process.env.FacebookToken}`,
                     },
                 }
             )
@@ -404,7 +405,7 @@ const WhatsAppCntrl = {
                     {
                         headers: {
                             Authorization:
-                                "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                `Bearer ${process.env.FacebookToken}`,
                         },
                     }
                 )
@@ -426,7 +427,7 @@ const WhatsAppCntrl = {
                             {
                                 headers: {
                                     Authorization:
-                                        "Bearer EAALaMK7l29cBAFn42lwAEDGTHBZCLJ2IYKrNKAN38V9zNVGvr62Vj2swOeyjUtpUC0izYEfaBTtkch4LMUmmFdM1qWJ98Apgl14D0wkGERzAgvc9ZBSPQBGqzE4lpicu8jH2QvefKdOm2xQ3AnQx5nSSIZCeTZBX5fkF5pZBTv5zpZBZA4Bvgy83ImqlkSDPSGfxbAPqbJQagZDZD",
+                                        `Bearer ${process.env.FacebookToken}`,
                                 },
                             }
                         )
