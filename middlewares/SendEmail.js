@@ -31,14 +31,18 @@ const SendMail = async (to, html, subject) => {
       },
     });
     const mailOptions = {
-      from: "Property App <${SenderEmail}>",
+      from: "StateBook <${SenderEmail}>",
       to: to,
       subject: subject,
       html: html,
     };
 
     transport.sendMail(mailOptions, (err, infor) => {
-      if (err) return err;
+      if (err) {
+        console.log(err)
+        return err
+      };
+      console.log(infor)
       return infor;
     });
   } catch (error) {

@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // );
 app.use(express.static('public'));
 app.use('/api/images', express.static(path.join(__dirname, 'public/uploads/user')));
-
+app.use('/api/email_aasets', express.static(path.join(__dirname, 'public/emailAssets')));
 app.use((req, res, next) => {
   res.locals.h = helpers;
   res.locals.admin = req.admin || null;

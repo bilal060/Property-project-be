@@ -162,20 +162,8 @@ exports.isLoggedin = async (req, res, next) => {
                 message: "user doens't Exist, authorization denied.",
                 jwtExpired: true,
             });
-
-        if (user.isLoggedIn === false)
-            return res.status(401).json({
-                success: false,
-                result: null,
-                message: 'user is already logout try to login, authorization denied.',
-                jwtExpired: true,
-            });
-
-
-        else {
-            req.user = user;
-            next();
-        }
+        req.user = user;
+        next();
     } catch (err) {
         res.status(503).json({
             success: false,

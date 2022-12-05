@@ -6,23 +6,7 @@ const bcrypt = require('bcryptjs');
 const UserSchema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    removed: {
-        type: Boolean,
-        default: false,
-    },
-    isFacebookLogin: {
-        type: Boolean,
-        default: false,
-    },
-    isGoogleLogin: {
-        type: Boolean,
-        default: false,
-    },
-    isSocialLogin: {
-        type: Boolean,
-        default: false,
-    },
-    socialId: { type: String, required: true, default: null },
+    socialId: { type: String, default: null },
     enabled: {
         type: Boolean,
         default: true,
@@ -50,10 +34,37 @@ const UserSchema = new Schema({
     about: {
         type: String,
     },
-
     photo: {
         type: String,
         trim: true,
+    },
+    isFacebookLogin: {
+        type: Boolean,
+        default: false,
+    },
+    isGoogleLogin: {
+        type: Boolean,
+        default: false,
+    },
+    isSocialLogin: {
+        type: Boolean,
+        default: false,
+    },
+    isPhoneVerified: {
+        type: Boolean,
+        default: false,
+    },
+    isEmailVerified: {
+        type: Boolean,
+        default: false,
+    },
+    isActive: {
+        type: Boolean,
+        default: false,
+    },
+    removed: {
+        type: Boolean,
+        default: false,
     },
 
     createdAt: {
