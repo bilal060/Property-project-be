@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const autopopulate = require("mongoose-autopopulate")
 const StatesSchema = new mongoose.Schema(
     {
         id: {
@@ -23,5 +23,6 @@ const StatesSchema = new mongoose.Schema(
         timestamps: false,
     }
 );
-StatesSchema.plugin(require('mongoose-autopopulate'));
+// @ts-ignore
+StatesSchema.plugin(autopopulate);
 module.exports = mongoose.model("States", StatesSchema);

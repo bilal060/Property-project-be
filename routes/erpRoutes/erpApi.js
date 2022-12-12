@@ -5,7 +5,6 @@ const { setSingleFilePathToBody, setMultipleFilePathToBody } = require('@/middle
 const { catchErrors } = require('@/handlers/errorHandlers');
 var multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
-
 const adminController = require('@/controllers/erpControllers/adminController');
 const roleController = require('@/controllers/erpControllers/roleController');
 const societyController = require('@/controllers/erpControllers/societyController');
@@ -22,9 +21,7 @@ const { numberChecker } = require('@/middlewares/WhatsAppProcesser/numberCheckAn
 const SocialLoginCntrl = require('@/controllers/erpControllers/socialLoginCntrl');
 const permissionsController = require('@/controllers/erpControllers/permissionsController');
 
-
 // //_______________________________ Admin management_______________________________
-
 var adminPhotoStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/uploads/user');
@@ -42,7 +39,6 @@ var storage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
-
 const fileUpload = multer({ storage: storage });
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -57,14 +53,32 @@ var storage = multer.diskStorage({
     }
     else {
       const uuid = uuidv4();
-
       cb(null, uuid + "." + ext);
       req.body["fileName"] = uuid + "." + ext;
     }
   },
 });
-
 const WhatsAppfileUpload = multer({ storage: storage });
+
+var videoUploaderStorage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, 'public/uploads/user');
+  },
+  filename: (req, file, callback) => {
+    const match = ["video/mp4", "video/webm", "video/3gpp"];
+
+    if (match.indexOf(file.mimetype) === -1) {
+      var message = `${file.originalname}is invalid. Only accept png/jpeg.`;
+      // @ts-ignore
+      return callback(message, null);
+    }
+
+    var filename = `${Date.now()}-${file.originalname}`;
+    callback(null, filename);
+  }
+});
+const propertyVideoUpload = multer({ storage: videoUploaderStorage });
+
 
 router
   .route('/admin/create')
@@ -85,9 +99,7 @@ router.route('/admin/status/:id').patch([isValidAdminToken, adminPhotoUpload.sin
 // router
 //   .route("/admin/password-update/:id")
 //   .patch(catchErrors(adminController.updatePassword));
-
 // //____________________________ Role management_______________________________
-
 router.route('/role/create').post(isValidAdminToken, catchErrors(roleController.createRole));
 router.route('/role/read/:id').get(isValidAdminToken, catchErrors(roleController.readRole));
 router.route('/role/update/:id').patch(isValidAdminToken, catchErrors(roleController.updateRole));
@@ -97,9 +109,7 @@ router.route('/role/list').get(isValidAdminToken, catchErrors(roleController.lis
 router.route('/role/filter').get(isValidAdminToken, catchErrors(roleController.filterRole));
 router.route('/role/addpermissions/:id').patch(isValidAdminToken, catchErrors(roleController.addOrRemovePermissions));
 
-
 // //____________________________ Permission management_______________________________
-
 router.route('/permissions/create').post(isValidAdminToken, catchErrors(permissionsController.createPermission));
 router.route('/permissions/read/:id').get(isValidAdminToken, catchErrors(permissionsController.readPermission));
 router.route('/permissions/update/:id').patch(isValidAdminToken, catchErrors(permissionsController.updatePermission));
@@ -107,16 +117,13 @@ router.route('/permissions/delete/:id').delete(isValidAdminToken, catchErrors(pe
 router.route('/permissions/search').get(isValidAdminToken, catchErrors(permissionsController.searchPermission));
 router.route('/permissions/list').get(isValidAdminToken, catchErrors(permissionsController.listPermission));
 
-
 // ---------------------------------Api for Societies----------------
-
 router.route('/society/create').post([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(societyController.create));
 router.route('/society/list').get(catchErrors(societyController.list));
 router.route('/society/read/:id').get(catchErrors(societyController.read));
 router.route('/society/update/:id').patch([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(societyController.update));
 router.route('/society/delete/:id').delete(isValidAdminToken, catchErrors(societyController.delete));
 router.route('/society/getPictureByPath/:path').get(catchErrors(societyController.getPictureByPath));
-
 
 // // ---------------------------------Api for Phases----------------
 router.route('/phase/create').post([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(phaseController.create));
@@ -125,25 +132,21 @@ router.route('/phase/read/:id').get(catchErrors(phaseController.read));
 router.route('/phase/getPhaseBySocietyId/:id').get(catchErrors(phaseController.getPhaseBySocietyId))
 router.route('/phase/update/:id').patch([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(phaseController.update));
 router.route('/phase/delete/:id').delete(isValidAdminToken, catchErrors(phaseController.delete));
-
 // // ---------------------------------Api for Blocks-------------------
 router.route('/block/create').post([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(blockController.create));
 router.route('/block/list').get(catchErrors(blockController.list));
 router.route('/block/read/:id').get(catchErrors(blockController.read));
 router.route('/block/update/:id').patch([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(blockController.update));
 router.route('/block/delete/:id').delete(isValidAdminToken, catchErrors(blockController.delete));
-
 // // ---------------------------------Api for Property---------------------
-
-router.route('/property/create').post([RoleCheck, multipleUpload, setMultipleFilePathToBody], catchErrors(propertyController.create));
-router.route('/property/list').get(catchErrors(propertyController.list));
-router.route('/property/read/:id').get(catchErrors(propertyController.read));
-router.route('/property/update/:id').patch([RoleCheck, multipleUpload, setMultipleFilePathToBody], catchErrors(propertyController.update));
-router.route('/property/delete/:id').delete(RoleCheck, catchErrors(propertyController.delete));
-
+router.route('/property/create').post([RoleCheck, multipleUpload, setMultipleFilePathToBody], catchErrors(propertyController.createProperty));
+router.route('/property/list').get(catchErrors(propertyController.listProperty));
+router.route('/property/read/:id').get(catchErrors(propertyController.readProperty));
+router.route('/property/update/:id').patch([RoleCheck, multipleUpload, setMultipleFilePathToBody], catchErrors(propertyController.updateProperty));
+router.route('/property/uploadvideos/:id').patch([RoleCheck, propertyVideoUpload.array('videos'), setMultipleFilePathToBody], catchErrors(propertyController.updateProperty));
+router.route('/property/delete/:id').delete(RoleCheck, catchErrors(propertyController.deleteProperty));
 
 // // --------------------------------- Api for Events ---------------------
-
 router.route('/events/create').post(RoleCheck, catchErrors(eventsController.create));
 router.route('/events/list').get(RoleCheck, catchErrors(eventsController.list));
 router.route('/events/read/:id').get(RoleCheck, catchErrors(eventsController.read));
@@ -152,7 +155,6 @@ router.route('/events/delete/:id').delete(RoleCheck, catchErrors(eventsControlle
 // ------------------------------------ File Reader
 router.route('/readfiledata/:id').post(fileUpload.array("xlsx"), catchErrors(fileReaderController.raedFileData));
 router.route('/getProperties').get(catchErrors(fileReaderController.getPropertiesBySocietyId));
-
 //  ---------------------------------- WhatsApp Route
 router.post("/createMsg", numberChecker, WhatsAppCntrl.CreateMessage)
 router.get("/createMsg", WhatsAppCntrl.createMsgGet)
@@ -166,6 +168,5 @@ router.post("/send_multimedia_message", WhatsAppfileUpload.single("file"), Whats
 //  ---------------------------------- Social Login Route
 router.post("/socialregister", SocialLoginCntrl.register)
 router.post("/sociallogin", SocialLoginCntrl.login)
-
 
 module.exports = router;

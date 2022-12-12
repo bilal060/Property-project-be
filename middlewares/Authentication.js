@@ -7,14 +7,14 @@ exports.isValidAdminToken = async (req, res, next) => {
     try {
 
         const token = req.header("Authorization");
-        if (!token)
+        if (!token) {
             return res.status(401).json({
                 success: false,
                 result: null,
                 message: 'No authentication token, authorization denied.',
                 jwtExpired: true,
             });
-
+        }
         const verified = jwt.verify(token, process.env.JWT_SECRET);
 
         if (!verified)
@@ -52,10 +52,10 @@ exports.isValidAdminToken = async (req, res, next) => {
                 jwtExpired: true,
             });
 
-        else {
-            req.user = admin;
-            next();
-        }
+        // console.log(admin)
+        req.user = admin;
+        // console.log(req)
+        next();
     } catch (err) {
         res.status(503).json({
             success: false,
@@ -112,10 +112,8 @@ exports.isValidAgent = async (req, res, next) => {
                 message: 'Access denied',
                 jwtExpired: true,
             });
-        else {
-            req.user = agent;
-            next();
-        }
+        req.user = agent;
+        next();
     } catch (err) {
         res.status(503).json({
             success: false,

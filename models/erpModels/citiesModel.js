@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
 
 const CitiesSchema = new mongoose.Schema(
     {
@@ -25,5 +26,7 @@ const CitiesSchema = new mongoose.Schema(
         timestamps: false,
     }
 );
+// @ts-ignore
+CitiesSchema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model("Cities", CitiesSchema);
