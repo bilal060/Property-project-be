@@ -20,6 +20,7 @@ const multipleUpload = require('@/middlewares/upload');
 const WhatsAppCntrl = require('@/controllers/erpControllers/whatsAppController');
 const { numberChecker } = require('@/middlewares/WhatsAppProcesser/numberCheckAndSave');
 const SocialLoginCntrl = require('@/controllers/erpControllers/socialLoginCntrl');
+const permissionsController = require('@/controllers/erpControllers/permissionsController');
 
 
 // //_______________________________ Admin management_______________________________
@@ -87,13 +88,24 @@ router.route('/admin/status/:id').patch([isValidAdminToken, adminPhotoUpload.sin
 
 // //____________________________ Role management_______________________________
 
-router.route('/role/create').post([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(roleController.create));
-router.route('/role/read/:id').get(catchErrors(roleController.read));
-router.route('/role/update/:id').patch([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(roleController.update));
-router.route('/role/delete/:id').delete(isValidAdminToken, catchErrors(roleController.delete));
-router.route('/role/search').get(catchErrors(roleController.search));
-router.route('/role/list').get(catchErrors(roleController.list));
-router.route('/role/filter').get(catchErrors(roleController.filter));
+router.route('/role/create').post(isValidAdminToken, catchErrors(roleController.createRole));
+router.route('/role/read/:id').get(isValidAdminToken, catchErrors(roleController.readRole));
+router.route('/role/update/:id').patch(isValidAdminToken, catchErrors(roleController.updateRole));
+router.route('/role/delete/:id').delete(isValidAdminToken, catchErrors(roleController.deleteRole));
+router.route('/role/search').get(isValidAdminToken, catchErrors(roleController.searchRole));
+router.route('/role/list').get(isValidAdminToken, catchErrors(roleController.listRole));
+router.route('/role/filter').get(isValidAdminToken, catchErrors(roleController.filterRole));
+router.route('/role/addpermissions/:id').patch(isValidAdminToken, catchErrors(roleController.addOrRemovePermissions));
+
+
+// //____________________________ Permission management_______________________________
+
+router.route('/permissions/create').post(isValidAdminToken, catchErrors(permissionsController.createPermission));
+router.route('/permissions/read/:id').get(isValidAdminToken, catchErrors(permissionsController.readPermission));
+router.route('/permissions/update/:id').patch(isValidAdminToken, catchErrors(permissionsController.updatePermission));
+router.route('/permissions/delete/:id').delete(isValidAdminToken, catchErrors(permissionsController.deletePermission));
+router.route('/permissions/search').get(isValidAdminToken, catchErrors(permissionsController.searchPermission));
+router.route('/permissions/list').get(isValidAdminToken, catchErrors(permissionsController.listPermission));
 
 
 // ---------------------------------Api for Societies----------------

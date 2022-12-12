@@ -57,7 +57,6 @@ exports.isValidAdminToken = async (req, res, next) => {
             next();
         }
     } catch (err) {
-        console.log(err)
         res.status(503).json({
             success: false,
             result: null,
@@ -66,10 +65,6 @@ exports.isValidAdminToken = async (req, res, next) => {
         });
     }
 };
-
-
-
-
 exports.isValidAgent = async (req, res, next) => {
     try {
         const token = req.header("Authorization");
@@ -130,9 +125,6 @@ exports.isValidAgent = async (req, res, next) => {
         });
     }
 };
-
-
-
 exports.isLoggedin = async (req, res, next) => {
     try {
         const token = req.header("Authorization");
@@ -173,6 +165,3 @@ exports.isLoggedin = async (req, res, next) => {
         });
     }
 };
-
-
-

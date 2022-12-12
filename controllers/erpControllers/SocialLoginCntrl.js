@@ -9,7 +9,7 @@ const SocialLoginCntrl = {
         try {
             const { firstName, lastName, socialId, isGoogleLogin, isFacebookLogin, email, userType, photo } = req.body;
             console.log(firstName, lastName, socialId, email, userType, photo)
-            // validate
+            // validate 
             if (!firstName || !lastName || !socialId || !email || !userType || !photo) {
                 return res.status(400).json({
                     success: false,

@@ -2,11 +2,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '.variables.env' });
 const { isValidAdminToken, isValidAgent } = require("./Authentication");
 exports.RoleCheck = async (req, res, next) => {
-
     try {
-
         const token = req.header("Authorization");
-
         if (!token)
             return res.status(401).json({
                 success: false,
@@ -14,9 +11,7 @@ exports.RoleCheck = async (req, res, next) => {
                 message: 'No authentication token, authorization denied.',
                 jwtExpired: true,
             });
-
         const verified = jwt.verify(token, process.env.JWT_SECRET);
-       
         if (!verified)
             return res.status(401).json({
                 success: false,
@@ -24,7 +19,6 @@ exports.RoleCheck = async (req, res, next) => {
                 message: 'Token verification failed, authorization denied.',
                 jwtExpired: true,
             });
-
         if (verified.role === "superadmin" && verified.isLoggedIn) {
             isValidAdminToken(req, res, next)
         } else if (verified.role === "agent" && verified.isLoggedIn) {
@@ -37,7 +31,6 @@ exports.RoleCheck = async (req, res, next) => {
                 jwtExpired: true,
             });
         }
-
     } catch (err) {
         res.status(503).json({
             success: false,
