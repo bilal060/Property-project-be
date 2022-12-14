@@ -1,6 +1,6 @@
+// @ts-nocheck
 const mongoose = require('mongoose');
 const PropertyModel = mongoose.model('Property');
-// @ts-nocheck
 const moment = require('moment');
 const propertyController = {
     readProperty: async (req, res) => {
