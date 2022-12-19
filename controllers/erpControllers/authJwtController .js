@@ -19,6 +19,7 @@ const authCntrl = {
   register: async (req, res) => {
     try {
       const { firstName, lastName, email, password, phone, confirmPassword, userType, photo } = req.body;
+      console.log(firstName, lastName, email, password, phone, confirmPassword, userType, photo)
       // validate
       if (!firstName || !lastName || !email || !password || !phone || !confirmPassword || !userType || !photo) {
         return res.status(400).json({
@@ -77,13 +78,22 @@ const authCntrl = {
 
   login: async (req, res) => {
     try {
-      const { email, password } = req.body;  // validate
-      if (!email || !password)
+      const { userEmailPhone, password } = req.body;  // validate
+      if (!userEmailPhone || !password)
         return res.status(400).json({
           success: false,
           result: null,
           message: 'Not all fields have been entered.',
-        }); const user = await User.findOne({ email: email, removed: false });
+        });
+      const user = await User.findOne({
+        $or: [{
+          "email": userEmailPhone
+        }, {
+          "phone": userEmailPhone
+        }]
+      });
+      console.log(user)
+      // const user = await User.findOne({ email: email, removed: false });
       if (!user)
         return res.status(400).json({
           success: false,

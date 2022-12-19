@@ -20,8 +20,10 @@ const WhatsAppCntrl = require('@/controllers/erpControllers/whatsAppController')
 const { numberChecker } = require('@/middlewares/WhatsAppProcesser/numberCheckAndSave');
 const SocialLoginCntrl = require('@/controllers/erpControllers/socialLoginCntrl');
 const permissionsController = require('@/controllers/erpControllers/permissionsController');
+const chatsCntrl = require("@/controllers/erpControllers/chatController")
+const messageCntrl = require("@/controllers/erpControllers/chatMessageController")
 
-// //_______________________________ Admin management_______________________________
+//_______________________________ Admin management_______________________________
 var adminPhotoStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/uploads/user');
@@ -99,7 +101,7 @@ router.route('/admin/status/:id').patch([isValidAdminToken, adminPhotoUpload.sin
 // router
 //   .route("/admin/password-update/:id")
 //   .patch(catchErrors(adminController.updatePassword));
-// //____________________________ Role management_______________________________
+//____________________________ Role management_______________________________
 router.route('/role/create').post(isValidAdminToken, catchErrors(roleController.createRole));
 router.route('/role/read/:id').get(isValidAdminToken, catchErrors(roleController.readRole));
 router.route('/role/update/:id').patch(isValidAdminToken, catchErrors(roleController.updateRole));
@@ -109,7 +111,7 @@ router.route('/role/list').get(isValidAdminToken, catchErrors(roleController.lis
 router.route('/role/filter').get(isValidAdminToken, catchErrors(roleController.filterRole));
 router.route('/role/addpermissions/:id').patch(isValidAdminToken, catchErrors(roleController.addOrRemovePermissions));
 
-// //____________________________ Permission management_______________________________
+//____________________________ Permission management_______________________________
 router.route('/permissions/create').post(isValidAdminToken, catchErrors(permissionsController.createPermission));
 router.route('/permissions/read/:id').get(isValidAdminToken, catchErrors(permissionsController.readPermission));
 router.route('/permissions/update/:id').patch(isValidAdminToken, catchErrors(permissionsController.updatePermission));
@@ -125,20 +127,20 @@ router.route('/society/update/:id').patch([isValidAdminToken, adminPhotoUpload.s
 router.route('/society/delete/:id').delete(isValidAdminToken, catchErrors(societyController.delete));
 router.route('/society/getPictureByPath/:path').get(catchErrors(societyController.getPictureByPath));
 
-// // ---------------------------------Api for Phases----------------
+// ---------------------------------Api for Phases----------------
 router.route('/phase/create').post([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(phaseController.create));
 router.route('/phase/list').get(catchErrors(phaseController.list));
 router.route('/phase/read/:id').get(catchErrors(phaseController.read));
 router.route('/phase/getPhaseBySocietyId/:id').get(catchErrors(phaseController.getPhaseBySocietyId))
 router.route('/phase/update/:id').patch([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(phaseController.update));
 router.route('/phase/delete/:id').delete(isValidAdminToken, catchErrors(phaseController.delete));
-// // ---------------------------------Api for Blocks-------------------
+// ---------------------------------Api for Blocks-------------------
 router.route('/block/create').post([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(blockController.create));
 router.route('/block/list').get(catchErrors(blockController.list));
 router.route('/block/read/:id').get(catchErrors(blockController.read));
 router.route('/block/update/:id').patch([isValidAdminToken, adminPhotoUpload.single('photo'), setSingleFilePathToBody], catchErrors(blockController.update));
 router.route('/block/delete/:id').delete(isValidAdminToken, catchErrors(blockController.delete));
-// // ---------------------------------Api for Property---------------------
+// ---------------------------------Api for Property---------------------
 router.route('/property/create').post([RoleCheck, multipleUpload, setMultipleFilePathToBody], catchErrors(propertyController.createProperty));
 router.route('/property/list').get(catchErrors(propertyController.listProperty));
 router.route('/property/read/:id').get(catchErrors(propertyController.readProperty));
@@ -146,7 +148,7 @@ router.route('/property/update/:id').patch([RoleCheck, multipleUpload, setMultip
 router.route('/property/uploadvideos/:id').patch([RoleCheck, propertyVideoUpload.array('videos'), setMultipleFilePathToBody], catchErrors(propertyController.updateProperty));
 router.route('/property/delete/:id').delete(RoleCheck, catchErrors(propertyController.deleteProperty));
 
-// // --------------------------------- Api for Events ---------------------
+// --------------------------------- Api for Events ---------------------
 router.route('/events/create').post(RoleCheck, catchErrors(eventsController.create));
 router.route('/events/list').get(RoleCheck, catchErrors(eventsController.list));
 router.route('/events/read/:id').get(RoleCheck, catchErrors(eventsController.read));
@@ -168,5 +170,16 @@ router.post("/send_multimedia_message", WhatsAppfileUpload.single("file"), Whats
 //  ---------------------------------- Social Login Route
 router.post("/socialregister", SocialLoginCntrl.register)
 router.post("/sociallogin", SocialLoginCntrl.login)
+// ----------------------------------- Chats Routes
+router.route("/chatdetails").post(RoleCheck, chatsCntrl.accessChat);
+router.route("/getallchats").get(RoleCheck, chatsCntrl.fetchChats);
+router.route("/createchatgroup").post(RoleCheck, chatsCntrl.createGroupChat);
+router.route("/renamegroup").put(RoleCheck, chatsCntrl.renameGroup);
+router.route("/groupremove").put(RoleCheck, chatsCntrl.removeFromGroup);
+router.route("/groupadd").put(RoleCheck, chatsCntrl.addToGroup);
+
+// ------------------------- message Routes
+router.route("/:chatId").get(RoleCheck, messageCntrl.allMessages);
+router.route("/createmessage").post(RoleCheck, messageCntrl.sendMessage);
 
 module.exports = router;
