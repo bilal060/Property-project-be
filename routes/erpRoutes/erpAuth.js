@@ -15,6 +15,7 @@ var adminPhotoStorage = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
   },
+  
 });
 const adminPhotoUpload = multer({ storage: adminPhotoStorage });
 router.route('/login').post(catchErrors(authCntrl.login));
