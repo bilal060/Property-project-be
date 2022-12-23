@@ -18,10 +18,9 @@ initScheduledJobs
 const authCntrl = {
   register: async (req, res) => {
     try {
-      const { firstName, lastName, email, password, phone, confirmPassword, userType, photo } = req.body;
-      console.log(firstName, lastName, email, password, phone, confirmPassword, userType, photo)
+      const { email, password, phone, confirmPassword, } = req.body;
       // validate
-      if (!firstName || !lastName || !email || !password || !phone || !confirmPassword || !userType || !photo) {
+      if (!email || !password || !phone || !confirmPassword) {
         return res.status(400).json({
           success: false,
           result: null,
@@ -34,7 +33,7 @@ const authCntrl = {
           message: 'Password and confirm password are not matched.',
         });
       }
-      const cRole = await Role.findOne({ roleType: userType });
+      const cRole = await Role.findOne({ roleType: 'CEO' });
       const user = await User.findOne({ email: email, removed: false });
       if (user) {
         return res.status(400).json({
@@ -54,7 +53,7 @@ const authCntrl = {
       const newUser = new User();
       const passwordHash = newUser.generateHash(password);
       await new User({
-        firstName, lastName, email, phone, password: passwordHash, role: cRole._id, photo: photo
+        email, phone, password: passwordHash, role: cRole._id
       }).save();
       const emailOtp = await new otpModel({
         email: email,
@@ -376,7 +375,6 @@ const authCntrl = {
           message: 'invalid otp.',
         });
       }
-      console.log(OtpData)
       let user;
       if (OtpData.email) {
         user = await User.findOne({ email: OtpData.email, removed: false });
@@ -545,6 +543,57 @@ const authCntrl = {
     }
   },
 
+  accountVerification: async (req, res) => {
+    try {
+      const { emailOtp, phoneOtp } = req.body;
+      if (!emailOtp || !phoneOtp)
+        return res.status(400).json({
+          success: false,
+          result: null,
+          message: 'Not all fields have been entered.',
+        });
+      const [emailData, phoneData] = await Promise.all([
+        otpModel.findOne({
+          otp: emailOtp
+        }),
+        otpModel.findOne({
+          otp: phoneOtp
+        }),
+      ]);
+
+      if (!emailData || !phoneData) {
+        return res.status(400).json({
+          success: false,
+          result: null,
+          message: 'invalid otp.',
+        });
+      }
+      let user = await User.findOne({ email: emailData.email, phone: phoneData.phone, removed: false });
+      if (user) {
+        await Promise.all([
+          otpModel.remove({
+            email: emailData.email
+          }),
+          otpModel.remove({
+            phone: phoneData.phone
+          }),
+          User.findOneAndUpdate({ email: emailData.email, phone: phoneData.phone, removed: false },
+            { isPhoneVerified: true, isEmailVerified: true, isActive: true },
+            {
+              new: true,
+            }
+          ).exec()
+        ]);
+      }
+
+      res.json({
+        success: true,
+        message: 'Account verified successfully',
+      });
+    } catch (err) {
+      res.status(500).json({ success: false, result: null, message: err.message, error: err });
+    }
+  },
 
   agentById: async (req, res) => {
     try {
@@ -652,7 +701,7 @@ const authCntrl = {
         .skip(skip)
         .limit(limit)
         .sort({ created: 'desc' })
-        .populate();
+        .populate().select('-password -role -isFacebookLogin -enabled -socialId -isGoogleLogin -isSocialLogin -isPhoneVerified -isEmailVerified -isActive -isLoggedIn');
       // Counting the total documents
       const countPromise = User.count(query);
       // Resolving both promises
@@ -660,7 +709,51 @@ const authCntrl = {
       // Calculating total pages
       const pages = Math.ceil(count / limit);  // Getting Pagination Object
       const pagination = { page, pages, count };
-      console.log(result)
+      if (count > 0) {
+        return res.status(200).json({
+          success: true,
+          result,
+          pagination,
+          message: 'Successfully found all documents',
+        });
+      } else {
+        return res.status(203).json({
+          success: false,
+          result: [],
+          pagination,
+          message: 'Collection is Empty',
+        });
+      }
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json({
+        success: false,
+        result: [],
+        message: 'Oops there is an Error',
+        error: err,
+      });
+    }
+  },
+  getCeos: async (req, res) => {
+    const page = req.query.page || 1;
+    const limit = parseInt(req.query.items) || 10;
+    const skip = page * limit - limit; try {
+      let query = { removed: false }
+      const cRole = await Role.findOne({ roleType: 'CEO' });
+      query.role = cRole._id
+      //  Query the database for a list of all results
+      const resultsPromise = User.find(query)
+        .skip(skip)
+        .limit(limit)
+        .sort({ created: 'desc' })
+        .populate().select('-password -role -isFacebookLogin -enabled -socialId -isGoogleLogin -isSocialLogin -isPhoneVerified -isEmailVerified -isActive -isLoggedIn');
+      // Counting the total documents
+      const countPromise = User.count(query);
+      // Resolving both promises
+      const [result, count] = await Promise.all([resultsPromise, countPromise]);
+      // Calculating total pages
+      const pages = Math.ceil(count / limit);  // Getting Pagination Object
+      const pagination = { page, pages, count };
       if (count > 0) {
         return res.status(200).json({
           success: true,
@@ -704,7 +797,6 @@ const authCntrl = {
       // Calculating total pages
       const pages = Math.ceil(count / limit);  // Getting Pagination Object
       const pagination = { page, pages, count };
-      console.log(result)
       if (count > 0) {
         return res.status(200).json({
           success: true,

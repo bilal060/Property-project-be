@@ -1,5 +1,5 @@
 const confirmAccount = (otp) => {
-    return `
+  return `
    <head>
   <meta charset="UTF-8">
 </head>
@@ -14,6 +14,7 @@ const confirmAccount = (otp) => {
       <p>Thank you for choosing Your StateBook. Use the following OTP to complete your Sign Up procedures. OTP is valid
         for
         15 minutes</p>
+        <a href="https://www.w3schools.com/" target="_blank">Visit W3Schools!</a>
       <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">
         ${otp}</h2>
       <p style="font-size:0.9em;">Regards,<br />Your StateBook</p>
